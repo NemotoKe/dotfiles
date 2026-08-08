@@ -7,6 +7,7 @@ mkdir -p "$DOTFILES/vim"
 mkdir -p "$DOTFILES/nvim"
 mkdir -p "$DOTFILES/ghostty"
 mkdir -p "$DOTFILES/karabiner"
+mkdir -p "$DOTFILES/zsh"
 
 cp "$HOME/.vimrc" \
    "$DOTFILES/vim/.vimrc"
@@ -18,5 +19,8 @@ rsync -a "$HOME/.config/ghostty/" "$DOTFILES/ghostty/"
 
 cp "$HOME/.config/karabiner/karabiner.json" \
    "$DOTFILES/karabiner/karabiner.json"
+
+cp "$HOME/.zshrc" \
+   "$DOTFILES/zsh/.zshrc"
 
 echo "dotfiles backed up"

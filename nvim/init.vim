@@ -1,29 +1,160 @@
+" ============================================================
+" Runtimepath & Plugin initialization
+" ============================================================
 set runtimepath^=~/.vim
 set runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
-source ~/.vimrc
+" ============================================================
+" Plugins
+" ============================================================
+call plug#begin('~/.vim/plugged')
 
+" File explorer
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
+
+" Search & UI
+Plug 'kevinhwang91/nvim-hlslens'
+Plug 'folke/which-key.nvim'
+Plug 'petertriho/nvim-scrollbar'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'sindrets/diffview.nvim'
+
+" Editing
+Plug 'tpope/vim-commentary'
+Plug 'dominikduda/vim_current_word'
+Plug 'bullets-vim/bullets.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+
+" Navigation & buffers
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
+
+call plug#end()
+
+" ============================================================
+" Appearance & Basic Settings
+" ============================================================
+syntax enable
+filetype plugin indent on
+set background=dark
+set termguicolors
 set clipboard=unnamedplus
 
-" Neovim側で再度有効化
-filetype plugin indent on
-syntax enable
-set termguicolors
+set number relativenumber
+set cursorline
+set wildmenu
 
+colorscheme synthwave84
+highlight Statement guifg=#35FFF2 gui=bold
+
+" Markdown highlights
 highlight! @markup.heading.1.markdown guifg=#FF4FD8 gui=bold
 highlight! @markup.heading.2.markdown guifg=#35FFF2 gui=bold
 highlight! @markup.heading.3.markdown guifg=#9D7BFF gui=bold
-
 highlight! @markup.raw.markdown_inline guifg=#5CFFB0
 highlight! @markup.raw.block.markdown guifg=#5CFFB0
 
-" Python 用の設定
+" ============================================================
+" Search & Navigation
+" ============================================================
+let mapleader = " "
+
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set hidden
+
+" Escで検索ハイライト解除
+nnoremap <silent> <Esc> :nohlsearch<CR><Esc>
+
+" ウィンドウ移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" ============================================================
+" File Navigation (CtrlP)
+" ============================================================
+" Space + p : プロジェクト内のファイル検索
+nnoremap <silent> <leader>p :CtrlP<CR>
+
+" Space + b : 開いているバッファ検索
+nnoremap <silent> <leader>b :CtrlPBuffer<CR>
+
+" Space + r : 最近開いたファイル
+nnoremap <silent> <leader>r :CtrlPMRUFiles<CR>
+
+let g:ctrlp_map = ''
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/](\.git|node_modules|target|build|dist)$',
+      \ 'file': '\v\.(class|jar|war|log)$'
+      \ }
+
+" ============================================================
+" Search
+" ============================================================
+" カーソル下の単語を検索
+nnoremap <silent> <leader>s :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<CR>n
+
+" 次・前の検索結果
+nnoremap <silent> ]s n
+nnoremap <silent> [s N
+
+" ============================================================
+" Comment (vim-commentary)
+" ============================================================
+" gcc      : 現在行をコメント切替
+" gc{移動} : 範囲をコメント切替
+" 選択→gc  : 選択範囲をコメント切替
+nmap <leader>/ gcc
+xmap <leader>/ gc
+
+" ============================================================
+" Indent Guides
+" ============================================================
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
+nnoremap <silent> <leader>i :IndentGuidesToggle<CR>
+
+" ============================================================
+" Bullets
+" ============================================================
+let g:bullets_enabled_file_types = [
+      \ 'markdown',
+      \ 'text',
+      \ 'gitcommit'
+      \ ]
+
+" ============================================================
+" Git Commands
+" ============================================================
+" Space + g : Gitステータス
+nnoremap <silent> <leader>g :Git<CR>
+
+" Space + gb : 行の変更履歴
+nnoremap <silent> <leader>gb :Git blame<CR>
+
+" Space + gc : コミット
+nnoremap <silent> <leader>gc :Git commit<CR>
+
+" Space + gp : push
+nnoremap <silent> <leader>gp :Git push<CR>
 
 lua << EOF
--- =========================
--- Python LSP
--- =========================
+-- ============================================================
+-- LSP Configuration (Python)
+-- ============================================================
 vim.lsp.enable('basedpyright')
 vim.lsp.enable('ruff')
 
@@ -34,14 +165,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return
     end
 
-    -- 型情報・補完は BasedPyright
+    -- Enable completion for BasedPyright
     if client.name == 'basedpyright' then
       vim.lsp.completion.enable(true, client.id, args.buf, {
         autotrigger = true,
       })
     end
 
-    -- hover は BasedPyright に任せる
+    -- Disable hover for Ruff (use BasedPyright instead)
     if client.name == 'ruff' then
       client.server_capabilities.hoverProvider = false
     end
@@ -54,7 +185,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-
     vim.keymap.set('n', '<leader>f', function()
       vim.lsp.buf.format({
         filter = function(c)
@@ -65,10 +195,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-
--- =========================
--- Python 保存時 Ruff format
--- =========================
+-- Format on save with Ruff
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.py',
   callback = function()
@@ -81,10 +208,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
 })
 
-
--- =========================
--- Terminal
--- =========================
+-- ============================================================
+-- Terminal Configuration
+-- ============================================================
 vim.api.nvim_create_autocmd('TermOpen', {
   callback = function()
     vim.cmd('startinsert')
@@ -98,13 +224,11 @@ end, {
   force = true,
 })
 
--- Normal mode で T → ターミナルを開く
 vim.keymap.set('n', 'T', '<cmd>T<CR>', {
   noremap = true,
   silent = true,
 })
 
--- Terminal → Normal mode → 上のエディタへ
 vim.keymap.set(
   't',
   '<Esc><Esc>',
@@ -112,49 +236,34 @@ vim.keymap.set(
   { silent = true }
 )
 
-
--- =========================
--- Bufferline
--- =========================
+-- ============================================================
+-- Bufferline Setup
+-- ============================================================
 require("bufferline").setup({
   options = {
     mode = "buffers",
   }
 })
 
-vim.keymap.set(
-  'n',
-  ']b',
-  '<cmd>BufferLineCycleNext<CR>'
-)
+vim.keymap.set('n', ']b', '<cmd>BufferLineCycleNext<CR>')
+vim.keymap.set('n', '[b', '<cmd>BufferLineCyclePrev<CR>')
 
-vim.keymap.set(
-  'n',
-  '[b',
-  '<cmd>BufferLineCyclePrev<CR>'
-)
-
-
--- =========================
--- Neo-tree
--- =========================
+-- ============================================================
+-- Neo-tree Setup (File Explorer)
+-- ============================================================
 require("neo-tree").setup({
   close_if_last_window = false,
-
   filesystem = {
     filtered_items = {
       visible = true,
       hide_dotfiles = false,
       hide_gitignored = false,
     },
-
     follow_current_file = {
       enabled = true,
     },
-
     use_libuv_file_watcher = true,
   },
-
   window = {
     position = "left",
     width = 35,
@@ -171,10 +280,9 @@ vim.keymap.set(
   }
 )
 
-
--- =========================
--- hlslens
--- =========================
+-- ============================================================
+-- Search UI (hlslens)
+-- ============================================================
 require("hlslens").setup({
   calm_down = true,
 })
@@ -193,26 +301,19 @@ vim.keymap.set(
   { silent = true }
 )
 
-
--- =========================
--- Scrollbar
--- =========================
+-- ============================================================
+-- UI Enhancements
+-- ============================================================
 require("scrollbar").setup()
-
 require("scrollbar.handlers.search").setup()
 
-
--- =========================
--- which-key
--- =========================
 require("which-key").setup({
   preset = "modern",
 })
 
-
--- =========================
--- Diffview
--- =========================
+-- ============================================================
+-- Git Diff View (Diffview)
+-- ============================================================
 require("diffview").setup()
 
 vim.keymap.set(
@@ -220,7 +321,7 @@ vim.keymap.set(
   '<leader>gd',
   '<cmd>DiffviewOpen<CR>',
   {
-    desc = 'Git diff',
+    desc = 'Open git diff',
     silent = true,
   }
 )

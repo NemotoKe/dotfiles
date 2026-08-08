@@ -20,4 +20,7 @@ rsync -a --delete \
 cp "$DOTFILES/karabiner/karabiner.json" \
    "$HOME/.config/karabiner/karabiner.json"
 
+cp "$DOTFILES/zsh/.zshrc" \
+   "$HOME/.zshrc"
+
 echo "dotfiles applied"
