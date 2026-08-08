@@ -8,6 +8,7 @@ mkdir -p "$DOTFILES/nvim"
 mkdir -p "$DOTFILES/ghostty"
 mkdir -p "$DOTFILES/karabiner"
 mkdir -p "$DOTFILES/zsh"
+mkdir -p "$DOTFILES/hammerspoon"
 
 cp "$HOME/.vimrc" \
    "$DOTFILES/vim/.vimrc"
@@ -22,5 +23,7 @@ cp "$HOME/.config/karabiner/karabiner.json" \
 
 cp "$HOME/.zshrc" \
    "$DOTFILES/zsh/.zshrc"
+
+rsync -a "$HOME/.hammerspoon/" "$DOTFILES/hammerspoon/"
 
 echo "dotfiles backed up"

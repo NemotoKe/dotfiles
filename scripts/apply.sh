@@ -6,6 +6,7 @@ DOTFILES="$HOME/dotfiles"
 mkdir -p "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/ghostty"
 mkdir -p "$HOME/.config/karabiner"
+mkdir -p "$HOME/.hammerspoon"
 
 cp "$DOTFILES/vim/.vimrc" \
    "$HOME/.vimrc"
@@ -22,5 +23,9 @@ cp "$DOTFILES/karabiner/karabiner.json" \
 
 cp "$DOTFILES/zsh/.zshrc" \
    "$HOME/.zshrc"
+
+rsync -a --delete \
+  "$DOTFILES/hammerspoon/" \
+  "$HOME/.hammerspoon/"
 
 echo "dotfiles applied"
