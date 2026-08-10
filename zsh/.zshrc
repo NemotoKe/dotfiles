@@ -38,3 +38,6 @@ autoload -Uz compinit && compinit
 
 export JAVA_HOME="$(brew --prefix openjdk@21)/libexec/openjdk.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
+
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char

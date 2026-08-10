@@ -458,4 +458,21 @@ vim.keymap.set('t', '<C-g>', function()
   goto_source()
 end)
 
+
+-- Close All Normal Files
+vim.keymap.set('n', '<leader>bx', function()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buftype == '' then
+      vim.api.nvim_buf_delete(buf, {})
+    end
+  end
+end, { desc = 'Close all file buffers' })
+
+-- Neo-Tree
+require("neo-tree").setup({
+  filesystem = {
+    group_empty_dirs = true,
+  },
+})
+
 EOF
