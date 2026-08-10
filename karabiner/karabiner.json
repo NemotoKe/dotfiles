@@ -4,6 +4,35 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Ctrl + Left Click to Command + Left Click",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "modifiers": {
+                                        "mandatory": ["left_control"],
+                                        "optional": ["caps_lock"]
+                                    },
+                                    "pointing_button": "button1"
+                                },
+                                "to": [
+                                    {
+                                        "modifiers": ["left_command"],
+                                        "pointing_button": "button1"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Change Window with Opt + Tab",
                         "manipulators": [
                             {
@@ -265,7 +294,8 @@
                                             "^com\\.anthropic\\.claudefordesktop$",
                                             "^com\\.microsoft\\.VSCode$",
                                             "^org\\.pqrs\\.Karabiner-Elements\\.Settings$",
-                                            "^com\\.mitchellh\\.ghostty$"
+                                            "^com\\.mitchellh\\.ghostty$",
+	                                    "^com\\.jetbrains\\.intellij$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
