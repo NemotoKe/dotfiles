@@ -29,3 +29,12 @@ alias vi='nvim'
 export EDITOR=nvim
 export VISUAL=nvim
 
+bindkey -v
+
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --bind='ctrl-j:down,ctrl-k:up,ctrl-h:backward-char,ctrl-l:forward-char'"
+
+autoload -Uz compinit && compinit
+
+export JAVA_HOME="$(brew --prefix openjdk@21)/libexec/openjdk.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"

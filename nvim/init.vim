@@ -35,7 +35,22 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 
+" lsp
+Plug 'neovim/nvim-lspconfig'
+Plug 'mfussenegger/nvim-jdtls'
+
 call plug#end()
+
+" ============================================================
+"  Auto Read
+"" ============================================================
+
+set autoread
+
+augroup autoread
+  autocmd!
+  autocmd FocusGained,BufEnter * checktime
+augroup END
 
 " ============================================================
 " Appearance & Basic Settings
@@ -49,6 +64,7 @@ set clipboard=unnamedplus
 set number relativenumber
 set cursorline
 set wildmenu
+set mouse=a
 
 colorscheme synthwave84
 highlight Statement guifg=#35FFF2 gui=bold
@@ -59,6 +75,12 @@ highlight! @markup.heading.2.markdown guifg=#35FFF2 gui=bold
 highlight! @markup.heading.3.markdown guifg=#9D7BFF gui=bold
 highlight! @markup.raw.markdown_inline guifg=#5CFFB0
 highlight! @markup.raw.block.markdown guifg=#5CFFB0
+
+" Git Diff
+highlight DiffAdd    guibg=#16352a guifg=NONE
+highlight DiffDelete guibg=#351d2a guifg=NONE
+highlight DiffChange guibg=#1b2d40 guifg=NONE
+highlight DiffText   guibg=#4a315f guifg=NONE gui=bold
 
 " ============================================================
 " Search & Navigation
@@ -79,6 +101,12 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" 現在行の上下移動
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " ============================================================
 " File Navigation (CtrlP)
@@ -153,6 +181,48 @@ nnoremap <silent> <leader>gp :Git push<CR>
 
 lua << EOF
 -- ============================================================
+-- Java LSP Configuration
+-- ============================================================
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'java',
+
+  callback = function()
+    local config = {
+      cmd = { 'jdtls' },
+
+      root_dir = vim.fs.root(0, {
+        'gradlew',
+        'mvnw',
+        'pom.xml',
+        'build.gradle',
+        'settings.gradle',
+        '.git',
+      }),
+
+      settings = {
+        java = {
+          configuration = {
+            runtimes = {
+              {
+                name = 'JavaSE-21',
+                path = os.getenv('JAVA_HOME'),
+                default = true,
+              },
+            },
+          },
+        },
+      },
+
+      init_options = {
+        bundles = {},
+      },
+    }
+
+    require('jdtls').start_or_attach(config)
+  end,
+})
+
+-- ============================================================
 -- LSP Configuration (Python)
 -- ============================================================
 vim.lsp.enable('basedpyright')
@@ -207,6 +277,28 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     })
   end,
 })
+
+-- ============================================================
+-- Swift LSP Configuration
+-- ============================================================
+
+vim.lsp.config('sourcekit', {
+  cmd = { 'sourcekit-lsp' },
+  filetypes = { 'swift' },
+  root_markers = { 'Package.swift', '.git' },
+})
+
+vim.lsp.enable('sourcekit')
+
+-- ============================================================
+-- Java LSP Configuration
+-- ============================================================
+
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+vim.keymap.set('n', 'gr', vim.lsp.buf.references)
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action)
 
 -- ============================================================
 -- Terminal Configuration
@@ -345,4 +437,25 @@ vim.keymap.set(
     silent = true,
   }
 )
+
+local function goto_source()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+
+    if vim.bo[buf].buftype == ''
+      and vim.bo[buf].filetype ~= 'nerdtree'
+    then
+      vim.api.nvim_set_current_win(win)
+      return
+    end
+  end
+end
+
+vim.keymap.set('n', '<C-g>', goto_source)
+
+vim.keymap.set('t', '<C-g>', function()
+  vim.cmd('stopinsert')
+  goto_source()
+end)
+
 EOF
