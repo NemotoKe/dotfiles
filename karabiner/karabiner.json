@@ -4,6 +4,30 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Ctrl + Left Click to F12 in VS Code",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.microsoft\\.VSCode$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "modifiers": {
+                                        "mandatory": ["left_control"],
+                                        "optional": ["caps_lock"]
+                                    },
+                                    "pointing_button": "button1"
+                                },
+                                "to": [{ "key_code": "f12" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Ctrl + Left Click to Command + Left Click",
                         "manipulators": [
                             {
@@ -295,7 +319,7 @@
                                             "^com\\.microsoft\\.VSCode$",
                                             "^org\\.pqrs\\.Karabiner-Elements\\.Settings$",
                                             "^com\\.mitchellh\\.ghostty$",
-	                                    "^com\\.jetbrains\\.intellij$"
+                                            "^com\\.jetbrains\\.intellij$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
