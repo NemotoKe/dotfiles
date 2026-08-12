@@ -18,3 +18,6 @@ hs.hotkey.bind({}, "f15", function()
 hs.application.launchOrFocusByBundleID("md.obsidian")
 end)
 
+hs.hotkey.bind({}, "f14", function()
+hs.application.launchOrFocusByBundleID("com.jetbrains.intellij")
+end)
