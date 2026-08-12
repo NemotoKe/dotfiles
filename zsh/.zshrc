@@ -2,7 +2,7 @@
 # ~/.zprofile is login-only, so PATH additions live here to also cover
 # non-login terminals such as the VS Code integrated terminal.
 
-export PATH="/Users/nemotokenta/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Neon prompt
 PROMPT='%F{cyan}%n%f%F{8}@%f%F{magenta}%m%f %F{blue}%1~%f %F{magenta}❯%f '

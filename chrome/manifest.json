@@ -1,0 +1,95 @@
+{
+  "description": "Chrome theme generated from theme/colors.json.",
+  "manifest_version": 3,
+  "name": "Coolnight Chrome Theme",
+  "theme": {
+    "colors": {
+      "background_tab": [
+        1,
+        12,
+        24
+      ],
+      "background_tab_inactive": [
+        1,
+        12,
+        24
+      ],
+      "bookmark_text": [
+        201,
+        193,
+        214
+      ],
+      "button_background": [
+        201,
+        193,
+        214
+      ],
+      "frame": [
+        1,
+        12,
+        24
+      ],
+      "frame_inactive": [
+        1,
+        12,
+        24
+      ],
+      "ntp_background": [
+        1,
+        12,
+        24
+      ],
+      "ntp_header": [
+        201,
+        193,
+        214
+      ],
+      "ntp_link": [
+        255,
+        106,
+        215
+      ],
+      "ntp_text": [
+        201,
+        193,
+        214
+      ],
+      "omnibox_background": [
+        1,
+        12,
+        24
+      ],
+      "omnibox_text": [
+        201,
+        193,
+        214
+      ],
+      "tab_background_text": [
+        99,
+        104,
+        109
+      ],
+      "tab_text": [
+        255,
+        106,
+        215
+      ],
+      "toolbar": [
+        14,
+        48,
+        76
+      ],
+      "toolbar_button_icon": [
+        201,
+        193,
+        214
+      ],
+      "toolbar_text": [
+        201,
+        193,
+        214
+      ]
+    }
+  },
+  "version": "1.0.0"
+}

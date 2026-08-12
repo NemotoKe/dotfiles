@@ -3,6 +3,8 @@ set -e
 
 DOTFILES="$HOME/dotfiles"
 
+python3 "$DOTFILES/scripts/generate-theme.py"
+
 mkdir -p "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/ghostty"
 mkdir -p "$HOME/.config/karabiner"

@@ -1,0 +1,45 @@
+{
+  "name": "coolnight",
+  "colors": {
+    "background": "#010C18",
+    "foreground": "#ECDEF4",
+    "foreground_soft": "#C9C1D6",
+    "cursor": "#38FF9D",
+    "cursor_text": "#010C18",
+    "selection_background": "#38FF9C",
+    "tab_surface": "#0E304C",
+    "palette": [
+      "#0B3B61",
+      "#FF3A3A",
+      "#52FFD0",
+      "#FFF383",
+      "#1376F9",
+      "#C792EA",
+      "#FF5ED4",
+      "#16FDA2",
+      "#63686D",
+      "#FF54B0",
+      "#74FFD8",
+      "#FCF5AE",
+      "#388EFF",
+      "#AE81FF",
+      "#FF6AD7",
+      "#60FBBF"
+    ]
+  },
+  "roles": {
+    "surface": "palette[0]",
+    "border": "palette[0]",
+    "muted": "palette[8]",
+    "accent_green": "cursor",
+    "accent_green_soft": "palette[10]",
+    "accent_blue": "palette[12]",
+    "accent_pink": "palette[14]",
+    "accent_purple": "palette[13]",
+    "success": "palette[2]",
+    "danger": "palette[1]",
+    "warning": "palette[3]",
+    "info": "palette[12]",
+    "selection": "selection_background"
+  }
+}

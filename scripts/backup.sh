@@ -16,7 +16,8 @@ cp "$HOME/.vimrc" \
 cp "$HOME/.config/nvim/init.vim" \
    "$DOTFILES/nvim/init.vim"
 
-rsync -a "$HOME/.config/ghostty/" "$DOTFILES/ghostty/"
+rsync -a --exclude '/themes/coolnight' \
+  "$HOME/.config/ghostty/" "$DOTFILES/ghostty/"
 
 cp "$HOME/.config/karabiner/karabiner.json" \
    "$DOTFILES/karabiner/karabiner.json"

@@ -1,0 +1,17 @@
+{
+  "content_scripts": [
+    {
+      "css": [
+        "github.css"
+      ],
+      "matches": [
+        "https://github.com/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "GitHub dark theme generated from theme/colors.json.",
+  "manifest_version": 3,
+  "name": "Coolnight for GitHub",
+  "version": "1.0.0"
+}
