@@ -39,6 +39,8 @@ Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'mfussenegger/nvim-jdtls'
 
+Plug 'brenoprata10/nvim-highlight-colors'
+
 call plug#end()
 
 " ============================================================
@@ -474,5 +476,12 @@ require("neo-tree").setup({
     group_empty_dirs = true,
   },
 })
+
+require("nvim-highlight-colors").setup({
+  render = "virtual",
+  virtual_symbol = "■",
+  virtual_symbol_position = "eow",
+})
+
 
 EOF
