@@ -90,7 +90,7 @@ a:hover,
 .Popover-message,
 .discussion-timeline-actions,
 .timeline-comment {
-  background-color: var(--coolnight-surface) !important;
+  background-color: var(--coolnight-bg) !important;
   border-color: var(--coolnight-border) !important;
 }
 
@@ -227,12 +227,15 @@ a:focus-visible {
 }
 
 .pl-c,
+.color-fg-muted {
+  color: var(--coolnight-muted) !important;
+}
+
 .pl-c1,
 .pl-cce,
 .pl-coc,
-.pl-cos,
-.color-fg-muted {
-  color: var(--coolnight-muted) !important;
+.pl-cos {
+  color: var(--coolnight-warning) !important;
 }
 
 .pl-k,

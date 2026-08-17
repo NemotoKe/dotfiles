@@ -170,7 +170,7 @@ def github_manifest(document: dict[str, Any]) -> dict[str, Any]:
 def github_css(colors: dict[str, Any], roles: dict[str, Any]) -> str:
     values = {
         "__BACKGROUND__": colors["background"],
-        "__FOREGROUND__": colors["foreground_soft"],
+        "__FOREGROUND__": colors["foreground"],
         "__SURFACE__": color_role(colors, roles, "surface"),
         "__BORDER__": color_role(colors, roles, "border"),
         "__TAB_SURFACE__": colors["tab_surface"],
