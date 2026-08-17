@@ -8,6 +8,8 @@
     "cursor_text": "#010C18",
     "selection_background": "#38FF9C",
     "tab_surface": "#0E304C",
+    "surface": "#0A1826",
+    "surface_border": "#13253A",
     "palette": [
       "#0B3B61",
       "#FF3A3A",
@@ -28,8 +30,8 @@
     ]
   },
   "roles": {
-    "surface": "palette[0]",
-    "border": "palette[0]",
+    "surface": "surface",
+    "border": "surface_border",
     "muted": "palette[8]",
     "accent_green": "cursor",
     "accent_green_soft": "palette[10]",
