@@ -174,6 +174,7 @@ def github_css(colors: dict[str, Any], roles: dict[str, Any]) -> str:
         "__SURFACE__": color_role(colors, roles, "surface"),
         "__BORDER__": color_role(colors, roles, "border"),
         "__TAB_SURFACE__": colors["tab_surface"],
+        "__CHECKBOX__": colors["checkbox"],
         "__MUTED__": color_role(colors, roles, "muted"),
         "__ACCENT_GREEN__": color_role(colors, roles, "accent_green"),
         "__ACCENT_GREEN_SOFT__": color_role(colors, roles, "accent_green_soft"),

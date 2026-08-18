@@ -4,6 +4,7 @@
   --coolnight-surface: __SURFACE__;
   --coolnight-border: __BORDER__;
   --coolnight-tab-surface: __TAB_SURFACE__;
+  --coolnight-checkbox: __CHECKBOX__;
   --coolnight-muted: __MUTED__;
   --coolnight-green: __ACCENT_GREEN__;
   --coolnight-green-soft: __ACCENT_GREEN_SOFT__;
@@ -114,6 +115,20 @@ select,
   background-color: var(--coolnight-bg) !important;
   color: var(--coolnight-fg) !important;
   border-color: var(--coolnight-border) !important;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--coolnight-checkbox) !important;
+  border-color: var(--coolnight-checkbox) !important;
+}
+
+/* GitHub's query-builder search boxes (header search, issue/PR filter) render
+   visible text in an overlay behind a text-fill-transparent <input>. Forcing a
+   solid input background above hides that overlay, so keep it transparent there. */
+.styled-input-container input,
+[class*="quick-search-input"] input {
+  background-color: transparent !important;
 }
 
 input:focus,
